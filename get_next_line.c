@@ -6,19 +6,11 @@
 /*   By: rsetoue <rsetoue@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 21:31:57 by rsetoue           #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2021/09/19 01:21:43 by rsetoue          ###   ########.fr       */
-=======
-/*   Updated: 2021/09/19 04:06:15 by rsetoue          ###   ########.fr       */
->>>>>>> gnl_update
-=======
-/*   Updated: 2021/09/19 20:49:05 by rsetoue          ###   ########.fr       */
->>>>>>> gnl_update
+/*   Updated: 2021/11/22 19:48:26 by rsetoue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static t_list	*ft_get_list(int fd, char **leftover)
 {
@@ -49,54 +41,7 @@ static t_list	*ft_get_list(int fd, char **leftover)
 	return (head);
 }
 
-<<<<<<< HEAD
-char	*ft_get_line(char **line, t_list **head, char **leftover)
-{
-	int		i1;
-	int		i2;
-	int		line_len;
-
-	if (!*head)
-		return (NULL);
-	i1 = 0;
-	i2 = 0;
-	line_len = ((*head)->line_len);
-	while (*head)
-	{
-		(*head)->counter = 0;
-		while ((*head)->buffer[(*head)->counter])
-		{
-			if (i1 < line_len)
-<<<<<<< HEAD
-			{
-				(*line)[i1] = (*head)->buffer[(*head)->counter];
-				i1++;
-				(*head)->counter++;
-			}
-=======
-				(*line)[i1++] = (*head)->buffer[(*head)->counter++];
->>>>>>> gnl_update
-			else
-			{
-				if (*leftover && i1 == line_len)
-				{
-					(*leftover)[i2] = (*head)->buffer[(*head)->counter];
-					i2++;
-					(*head)->counter++;
-				}
-				else
-					return (NULL);
-			}
-		}
-		(*head) = ft_clear_node(&(*head));
-	}
-	return (*line);
-}
-
-char	*ft_make_line(t_list **head, char **leftover)
-=======
 static char	*ft_make_line(t_list **head, char **leftover)
->>>>>>> gnl_update
 {
 	int		left_len;
 	char	*line;

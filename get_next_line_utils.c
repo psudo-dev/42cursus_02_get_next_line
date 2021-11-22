@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsetoue <rsetoue@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 19:32:23 by rsetoue           #+#    #+#             */
-/*   Updated: 2021/11/22 19:37:48 by rsetoue          ###   ########.fr       */
+/*   Created: 2021/09/05 19:42:07 by rsetoue           #+#    #+#             */
+/*   Updated: 2021/11/22 19:47:55 by rsetoue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*ft_calloc(size_t n_elem, size_t type_size)
 {
@@ -34,17 +34,17 @@ t_list	*ft_new_node(void)
 	t_list	*list;
 	char	*buffer;
 
-	list = (t_list *)malloc(sizeof(t_list));
+	list = (t_list *) malloc(sizeof(t_list));
 	if (!list)
 		return (NULL);
-	buffer = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!buffer)
-		return (NULL);
-	else if (!buffer && list)
+	buffer = (char *) ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!buffer && list)
 	{
 		free(list);
 		return (NULL);
 	}
+	else if (!buffer)
+		return (NULL);
 	list->buffer = buffer;
 	list->counter = 0;
 	list->read_return = 0;
@@ -100,10 +100,10 @@ t_list	*ft_get_node(int fd, t_list **node, char **leftover)
 
 char	*ft_get_line(char **line, t_list **head, char **leftover)
 {
-	int	i;
-	int	i1;
-	int	i2;
-	int	line_len;
+	int		i;
+	int		i1;
+	int		i2;
+	int		line_len;
 
 	if (!*head)
 		return (NULL);
