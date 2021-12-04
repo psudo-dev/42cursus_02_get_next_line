@@ -6,11 +6,11 @@
 /*   By: rsetoue <rsetoue@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 21:31:57 by rsetoue           #+#    #+#             */
-/*   Updated: 2021/11/22 20:27:16 by rsetoue          ###   ########.fr       */
+/*   Updated: 2021/12/03 22:32:10 by rsetoue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include <get_next_line_bonus.h>
 
 static t_list	*ft_get_list(int fd, char **leftover)
 {
