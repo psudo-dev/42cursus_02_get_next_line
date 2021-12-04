@@ -6,7 +6,7 @@
 #    By: rsetoue <rsetoue@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/19 20:40:41 by rsetoue           #+#    #+#              #
-#    Updated: 2021/11/23 19:08:26 by rsetoue          ###   ########.fr        #
+#    Updated: 2021/12/03 22:25:30 by rsetoue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ BIN_DIR :=			bin
 SRC_DIR :=			src
 OBJ_DIR :=			build
 INC_DIR :=			inc
+TEST_DIR :=			test
 ALL_DIR :=			${BIN_DIR} \
 					${SRC_DIR} \
 					${OBJ_DIR} \
@@ -38,7 +39,8 @@ CC =				@clang
 CFLAGS =			-Wall -Wextra -Werror
 AR =				@ar -rc
 RANLIB =			@ranlib
-RM =				@rm -f
+RM_FILE :=			@rm -f
+RM_FOLDER :=		@rm -rf
 MSG =				@echo
 
 # < RECIPES
@@ -49,6 +51,7 @@ ${NAME}: ${ALL_DIR} ${OBJ}
 	${MSG_INDEX_LIB}
 	${RANLIB} ${NAME}
 	${DONE}
+	@cp ${NAME} ${BIN_DIR}
 	${MSG_FINISHED}
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c ${GNL_H} ${GNL_BONUS_H}
@@ -62,6 +65,7 @@ ${BONUS}: ${ALL_DIR} ${OBJ_BONUS}
 	${RANLIB} ${BONUS}
 	${DONE}
 	@cp ${BONUS} ${NAME}
+	@cp -p ${NAME} ${BIN_DIR}
 	${MSG_FINISHED}
 bonus: ${BONUS}
 
@@ -78,16 +82,78 @@ fclean: clean_build clean_program
 
 re: msg_rebuilding clean_build clean_program all
 
+norm:
+	${MSG} ${FG_LAV} "running norminette" ${RESET}
+	@norminette -R CheckForbiddenSourceHeader
+	${MSG_FINISHED}
+	${MSG}
+	${MSG}
+	${MSG}
+
 .PHONY: all clean fclean re
 
 # : CLEANING
 clean_build: msg_cleaning
-	${RM} ${OBJ} ${OBJ_BONUS}
+	${RM_FILE} build/*.o
 	${DONE}
 
 clean_program: msg_fcleaning
-	${RM} ${NAME} ${BONUS}
+	${RM_FILE} ${NAME} ${BIN_DIR}/*.a
 	${DONE}
+
+# ? TESTS
+
+TRIPOUILLE_DIR :=	${TEST_DIR}/tripouille
+
+${TRIPOUILLE_DIR}:
+	@git clone \
+	https://github.com/Tripouille/gnlTester.git \
+	${TRIPOUILLE_DIR}
+	${MSG_FINISHED}
+
+test: norm ${TRIPOUILLE_DIR}
+	@cp ${INC_DIR}/*.h ${TEST_DIR}
+	@cp ${SRC_DIR}/*.c ${TEST_DIR}
+t: test
+
+mandatory_tests: test ${TRIPOUILLE_DIR}
+	${MSG} ${FG_LAV} "running tripouille tests: MANDATORY" ${RESET}
+	${MAKE} m -C ${TRIPOUILLE_DIR}
+m: mandatory_tests
+
+bonus_tests: test ${TRIPOUILLE_DIR}
+	${MSG} ${FG_LAV} "running tripouille tests: BONUS" ${RESET}
+	${MAKE} b -C ${TRIPOUILLE_DIR}
+b: bonus_tests
+
+all_tests: test ${TRIPOUILLE_DIR}
+	${MSG} ${FG_LAV} "running tripouille tests: ALL" ${RESET}
+	${MAKE} a -C ${TRIPOUILLE_DIR}
+a: all_tests
+
+clean_test:
+	${MSG} ${FG_PINK} "make clean_test tests" ${RESET}
+	${RM_FILE} ${TEST_DIR}/*.o
+c: clean_test
+
+fclean_test: clean_test
+	${MSG} ${FG_PINK} "make fclean_test tests" ${RESET}
+	${RM_FILE} ${TEST_DIR}/*.*
+f: fclean_test
+
+rebuild_test: fclean_test test
+	${MSG} ${FG_PINK} "make rebuild_test tests" ${RESET}
+	${MSG_FINISHED}
+r: rebuild_test
+
+delete_test: fclean_test
+	${MSG} ${FG_PINK} "Removing ${TRIPOUILLE_DIR} Folder" ${RESET}
+	${RM_FOLDER} ${TRIPOUILLE_DIR}
+	${MSG_FINISHED}
+d: delete_test
+
+exit: fclean delete_test
+e: exit
 
 # ~ MESSAGES
 FG_GREEN :=			"\033[38;2;73;242;73m"
