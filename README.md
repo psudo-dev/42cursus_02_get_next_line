@@ -1,6 +1,6 @@
 # Get Next Line <!-- omit in toc -->
 
-#### Bonus A  <!-- omit in toc -->
+#### 42 Cursus  <!-- omit in toc -->
 
 get next line project for [42 | São Paulo](https://github.com/42sp) / [École 42](https://github.com/42School)
 
@@ -69,7 +69,7 @@ git clone https://github.com/psudo-dev/42cursus_02_get_next_line.git <DIR_NAME>
 
 I think the main thing about this project was to understand how the function `read()` works because at first it got me a bit confused.
 
-I thought I had to find a way to make the function `read()` read the next buffer btu actually the functino `read()` does a lot under the hood. It also cleans everything necessary that it is responsible for.
+I thought I had to find a way to make the function `read()` read the next buffer but `read()` already does most of the work under the hood. It also cleans everything necessary that it is responsible for.
 
 The next big task was to learn how to deal with a project composed of several functions, how to organize it or pass data from one function to another. But mainly how to solve `Segmentation Fault` and memory leaks, that was certainly a nightmare.
 
